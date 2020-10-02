@@ -10,6 +10,10 @@
 
 #include <stdint.h>
 
+#if defined ESP_PLATFORM
+#include "sdkconfig.h"
+#endif
+
 #if defined __has_include
 #  if __has_include("lv_conf.h")
 #    define LV_CONF_INCLUDE_SIMPLE
