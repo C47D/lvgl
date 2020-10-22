@@ -31,7 +31,13 @@
  *      INCLUDES
  *********************/
 
+#if defined __has_include
+#if __has_include("lv_conf.h")
 #include "lv_conf.h"
+#else
+#include "lv_conf_internal.h"
+#endif
+#endif
 
 #if LV_USE_GPU_NXP_PXP && LV_USE_GPU_NXP_PXP_AUTO_INIT
 
