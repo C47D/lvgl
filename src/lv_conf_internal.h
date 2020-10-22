@@ -10,15 +10,15 @@
 
 #include <stdint.h>
 
-#define LV_CONF_SKIP
-
 #if defined ESP_PLATFORM
 #include "sdkconfig.h"
 #endif
 
 #if defined __has_include
 #  if __has_include("lv_conf.h")
+#ifndef LV_CONF_INCLUDE_SIMPLE
 #    define LV_CONF_INCLUDE_SIMPLE
+#endif
 #  endif
 #endif
 
@@ -1174,32 +1174,25 @@ e.g. "stm32f769xx.h" or "stm32f429xx.h" */
 #  endif
 #endif
 
-// NOTE: Fix this: For monochrome theme we can only use two colors, black and white
-// for all other themes we can select a bunch of predefined colors or create our own
-// with lv_color_hex.
-// Maybe we can use lv_color_hex and define the hex for each COLOR, that way we can
-// use the hex Kconfig type
-//
 #ifndef LV_THEME_DEFAULT_COLOR_PRIMARY
 #  ifdef CONFIG_LV_THEME_DEFAULT_COLOR_PRIMARY
-// #    define LV_THEME_DEFAULT_COLOR_PRIMARY CONFIG_LV_THEME_DEFAULT_COLOR_PRIMARY
-#    define LV_THEME_DEFAULT_COLOR_PRIMARY LV_COLOR_BLACK
+#    define LV_THEME_DEFAULT_COLOR_PRIMARY      lv_color_hex(CONFIG_LV_THEME_DEFAULT_COLOR_PRIMARY)
 #  else
-#    define  LV_THEME_DEFAULT_COLOR_PRIMARY      lv_color_hex(0x01a2b1)
+#    define LV_THEME_DEFAULT_COLOR_PRIMARY      lv_color_hex(0x01a2b1)
 #  endif
 #endif
 #ifndef LV_THEME_DEFAULT_COLOR_SECONDARY
 #  ifdef CONFIG_LV_THEME_DEFAULT_COLOR_SECONDARY
-#    define LV_THEME_DEFAULT_COLOR_SECONDARY LV_COLOR_WHITE
+#    define LV_THEME_DEFAULT_COLOR_SECONDARY    lv_color_hex(CONFIG_LV_THEME_DEFAULT_COLOR_SECONDARY)
 #  else
-#    define  LV_THEME_DEFAULT_COLOR_SECONDARY    lv_color_hex(0x44d1b6)
+#    define LV_THEME_DEFAULT_COLOR_SECONDARY    lv_color_hex(0x44d1b6)
 #  endif
 #endif
 #ifndef LV_THEME_DEFAULT_FLAG
 #  ifdef CONFIG_LV_THEME_DEFAULT_FLAG
-#    define LV_THEME_DEFAULT_FLAG 0
+#    define LV_THEME_DEFAULT_FLAG               0
 #  else
-#    define  LV_THEME_DEFAULT_FLAG               LV_THEME_MATERIAL_FLAG_LIGHT
+#    define LV_THEME_DEFAULT_FLAG               LV_THEME_MATERIAL_FLAG_LIGHT
 #  endif
 #endif
 
