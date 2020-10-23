@@ -13,6 +13,7 @@
 #if defined ESP_PLATFORM
 #include "sdkconfig.h"
 #include "esp_attr.h"
+#include "lv_conf_kconfig.h"
 #endif
 
 #if defined __has_include
@@ -1155,23 +1156,12 @@ e.g. "stm32f769xx.h" or "stm32f429xx.h" */
 #    define  LV_THEME_DEFAULT_INCLUDE            <stdint.h>      /*Include a header for the init. function*/
 #  endif
 #endif
+
 #ifndef LV_THEME_DEFAULT_INIT
-#  ifdef CONFIG_LV_THEME_DEFAULT_INIT
-
-#if defined (CONFIG_LV_THEME_DEFAULT_INIT_EMPTY)
-    #define LV_THEME_DEFAULT_INIT               lv_theme_empty_init
-#elif defined (CONFIG_LV_THEME_DEFAULT_INIT_TEMPLATE)
-    #define LV_THEME_DEFAULT_INIT               lv_theme_template_init
-#elif defined (CONFIG_LV_THEME_DEFAULT_INIT_MATERIAL)
-    #define LV_THEME_DEFAULT_INIT               lv_theme_material_init
-#elif defined (CONFIG_LV_THEME_DEFAULT_INIT_MONO)
-    #define LV_THEME_DEFAULT_INIT               lv_theme_mono_init
-#else
-    #pragma message "Select default init"
-#endif
-
+#  ifdef CONFIG_LV_THEME_DEFAULT_INIT_AVAILABLE
+#    define LV_THEME_DEFAULT_INIT               CONFIG_LV_THEME_DEFAULT_INIT
 #  else
-#    define  LV_THEME_DEFAULT_INIT               lv_theme_material_init
+#    define LV_THEME_DEFAULT_INIT               lv_theme_material_init
 #  endif
 #endif
 
@@ -1182,6 +1172,7 @@ e.g. "stm32f769xx.h" or "stm32f429xx.h" */
 #    define LV_THEME_DEFAULT_COLOR_PRIMARY      lv_color_hex(0x01a2b1)
 #  endif
 #endif
+
 #ifndef LV_THEME_DEFAULT_COLOR_SECONDARY
 #  ifdef CONFIG_LV_THEME_DEFAULT_COLOR_SECONDARY
 #    define LV_THEME_DEFAULT_COLOR_SECONDARY    lv_color_hex(CONFIG_LV_THEME_DEFAULT_COLOR_SECONDARY)
@@ -1189,6 +1180,7 @@ e.g. "stm32f769xx.h" or "stm32f429xx.h" */
 #    define LV_THEME_DEFAULT_COLOR_SECONDARY    lv_color_hex(0x44d1b6)
 #  endif
 #endif
+
 #ifndef LV_THEME_DEFAULT_FLAG
 #  ifdef CONFIG_LV_THEME_DEFAULT_FLAG
 #    define LV_THEME_DEFAULT_FLAG               0
@@ -1197,244 +1189,20 @@ e.g. "stm32f769xx.h" or "stm32f429xx.h" */
 #  endif
 #endif
 
-// NOTE: CONFIG_LV_THEME_DEFAULT_FONT_SMALL is not defined by LVGL Kconfig
-// we defined CONFIG_LV_THEME_DEFAULT_FONT_SMALL_UNSCII_8
 #ifndef LV_THEME_DEFAULT_FONT_SMALL
-
-// NOTE: If Kconfig is used
-#  ifdef CONFIG_LV_THEME_DEFAULT_FONT_SMALL
-
-#if defined CONFIG_LV_FONT_DEFAULT_SMALL_MONTSERRAT_12
-#define LV_THEME_DEFAULT_FONT_SMALL         &lv_font_montserrat_12
-#elif defined CONFIG_LV_FONT_DEFAULT_SMALL_MONTSERRAT_14
-#define LV_THEME_DEFAULT_FONT_SMALL         &lv_font_montserrat_14
-#elif defined CONFIG_LV_FONT_DEFAULT_SMALL_MONTSERRAT_16
-#define LV_THEME_DEFAULT_FONT_SMALL         &lv_font_montserrat_16
-#elif defined CONFIG_LV_FONT_DEFAULT_SMALL_MONTSERRAT_18
-#define LV_THEME_DEFAULT_FONT_SMALL         &lv_font_montserrat_18
-#elif defined CONFIG_LV_FONT_DEFAULT_SMALL_MONTSERRAT_20
-#define LV_THEME_DEFAULT_FONT_SMALL         &lv_font_montserrat_20
-#elif defined CONFIG_LV_FONT_DEFAULT_SMALL_MONTSERRAT_22
-#define LV_THEME_DEFAULT_FONT_SMALL         &lv_font_montserrat_22
-#elif defined CONFIG_LV_FONT_DEFAULT_SMALL_MONTSERRAT_24
-#define LV_THEME_DEFAULT_FONT_SMALL         &lv_font_montserrat_24
-#elif defined CONFIG_LV_FONT_DEFAULT_SMALL_MONTSERRAT_26
-#define LV_THEME_DEFAULT_FONT_SMALL         &lv_font_montserrat_26
-#elif defined CONFIG_LV_FONT_DEFAULT_SMALL_MONTSERRAT_28
-#define LV_THEME_DEFAULT_FONT_SMALL         &lv_font_montserrat_28
-#elif defined CONFIG_LV_FONT_DEFAULT_SMALL_MONTSERRAT_30
-#define LV_THEME_DEFAULT_FONT_SMALL         &lv_font_montserrat_30
-#elif defined CONFIG_LV_FONT_DEFAULT_SMALL_MONTSERRAT_32
-#define LV_THEME_DEFAULT_FONT_SMALL         &lv_font_montserrat_32
-#elif defined CONFIG_LV_FONT_DEFAULT_SMALL_MONTSERRAT_34
-#define LV_THEME_DEFAULT_FONT_SMALL         &lv_font_montserrat_34
-#elif defined CONFIG_LV_FONT_DEFAULT_SMALL_MONTSERRAT_36
-#define LV_THEME_DEFAULT_FONT_SMALL         &lv_font_montserrat_36
-#elif defined CONFIG_LV_FONT_DEFAULT_SMALL_MONTSERRAT_38
-#define LV_THEME_DEFAULT_FONT_SMALL         &lv_font_montserrat_38
-#elif defined CONFIG_LV_FONT_DEFAULT_SMALL_MONTSERRAT_40
-#define LV_THEME_DEFAULT_FONT_SMALL         &lv_font_montserrat_40
-#elif defined CONFIG_LV_FONT_DEFAULT_SMALL_MONTSERRAT_42
-#define LV_THEME_DEFAULT_FONT_SMALL         &lv_font_montserrat_42
-#elif defined CONFIG_LV_FONT_DEFAULT_SMALL_MONTSERRAT_44
-#define LV_THEME_DEFAULT_FONT_SMALL         &lv_font_montserrat_44
-#elif defined CONFIG_LV_FONT_DEFAULT_SMALL_MONTSERRAT_46
-#define LV_THEME_DEFAULT_FONT_SMALL         &lv_font_montserrat_46
-#elif defined CONFIG_LV_FONT_DEFAULT_SMALL_MONTSERRAT_48
-#define LV_THEME_DEFAULT_FONT_SMALL         &lv_font_montserrat_48
-#elif defined CONFIG_LV_FONT_DEFAULT_SMALL_UNSCII_8
-#define LV_THEME_DEFAULT_FONT_SMALL         &lv_font_unscii_8
-#elif defined CONFIG_LV_FONT_DEFAULT_SMALL_MONTSERRAT12SUBPX
-#define LV_THEME_DEFAULT_FONT_SMALL         &lv_font_montserrat_12_subpx
-#elif defined CONFIG_LV_FONT_DEFAULT_SMALL_MONTSERRAT28COMPRESSED
-#define LV_THEME_DEFAULT_FONT_SMALL         &lv_font_montserrat_28_compressed
-#elif defined CONFIG_LV_FONT_DEFAULT_SMALL_DEJAVU_16_PERSIAN_HEBREW
-#define LV_THEME_DEFAULT_FONT_SMALL         &lv_font_dejavu_16_persian_hebrew
-#elif defined CONFIG_LV_FONT_DEFAULT_SMALL_SIMSUN_16_CJK
-#define LV_THEME_DEFAULT_FONT_SMALL         &lv_font_simsun_16_cjk
-#endif
-
-#  else // NOTE: if Kconfig is not used
-#    define  LV_THEME_DEFAULT_FONT_SMALL         &lv_font_montserrat_14
-#  endif
+#    define LV_THEME_DEFAULT_FONT_SMALL         &lv_font_montserrat_14
 #endif
 
 #ifndef LV_THEME_DEFAULT_FONT_NORMAL
-#  ifdef CONFIG_LV_THEME_DEFAULT_FONT_NORMAL
-
-#if defined CONFIG_LV_FONT_DEFAULT_NORMAL_MONTSERRAT_12
-#define LV_THEME_DEFAULT_FONT_NORMAL         &lv_font_montserrat_12
-#elif defined CONFIG_LV_FONT_DEFAULT_NORMAL_MONTSERRAT_14
-#define LV_THEME_DEFAULT_FONT_NORMAL         &lv_font_montserrat_14
-#elif defined CONFIG_LV_FONT_DEFAULT_NORMAL_MONTSERRAT_16
-#define LV_THEME_DEFAULT_FONT_NORMAL         &lv_font_montserrat_16
-#elif defined CONFIG_LV_FONT_DEFAULT_NORMAL_MONTSERRAT_18
-#define LV_THEME_DEFAULT_FONT_NORMAL         &lv_font_montserrat_18
-#elif defined CONFIG_LV_FONT_DEFAULT_NORMAL_MONTSERRAT_20
-#define LV_THEME_DEFAULT_FONT_NORMAL         &lv_font_montserrat_20
-#elif defined CONFIG_LV_FONT_DEFAULT_NORMAL_MONTSERRAT_22
-#define LV_THEME_DEFAULT_FONT_NORMAL         &lv_font_montserrat_22
-#elif defined CONFIG_LV_FONT_DEFAULT_NORMAL_MONTSERRAT_24
-#define LV_THEME_DEFAULT_FONT_NORMAL         &lv_font_montserrat_24
-#elif defined CONFIG_LV_FONT_DEFAULT_NORMAL_MONTSERRAT_26
-#define LV_THEME_DEFAULT_FONT_NORMAL         &lv_font_montserrat_26
-#elif defined CONFIG_LV_FONT_DEFAULT_NORMAL_MONTSERRAT_28
-#define LV_THEME_DEFAULT_FONT_NORMAL         &lv_font_montserrat_28
-#elif defined CONFIG_LV_FONT_DEFAULT_NORMAL_MONTSERRAT_30
-#define LV_THEME_DEFAULT_FONT_NORMAL         &lv_font_montserrat_30
-#elif defined CONFIG_LV_FONT_DEFAULT_NORMAL_MONTSERRAT_32
-#define LV_THEME_DEFAULT_FONT_NORMAL         &lv_font_montserrat_32
-#elif defined CONFIG_LV_FONT_DEFAULT_NORMAL_MONTSERRAT_34
-#define LV_THEME_DEFAULT_FONT_NORMAL         &lv_font_montserrat_34
-#elif defined CONFIG_LV_FONT_DEFAULT_NORMAL_MONTSERRAT_36
-#define LV_THEME_DEFAULT_FONT_NORMAL         &lv_font_montserrat_36
-#elif defined CONFIG_LV_FONT_DEFAULT_NORMAL_MONTSERRAT_38
-#define LV_THEME_DEFAULT_FONT_NORMAL         &lv_font_montserrat_38
-#elif defined CONFIG_LV_FONT_DEFAULT_NORMAL_MONTSERRAT_40
-#define LV_THEME_DEFAULT_FONT_NORMAL         &lv_font_montserrat_40
-#elif defined CONFIG_LV_FONT_DEFAULT_NORMAL_MONTSERRAT_42
-#define LV_THEME_DEFAULT_FONT_NORMAL         &lv_font_montserrat_42
-#elif defined CONFIG_LV_FONT_DEFAULT_NORMAL_MONTSERRAT_44
-#define LV_THEME_DEFAULT_FONT_NORMAL         &lv_font_montserrat_44
-#elif defined CONFIG_LV_FONT_DEFAULT_NORMAL_MONTSERRAT_46
-#define LV_THEME_DEFAULT_FONT_NORMAL         &lv_font_montserrat_46
-#elif defined CONFIG_LV_FONT_DEFAULT_NORMAL_MONTSERRAT_48
-#define LV_THEME_DEFAULT_FONT_NORMAL         &lv_font_montserrat_48
-#elif defined CONFIG_LV_FONT_DEFAULT_NORMAL_UNSCII_8
-#define LV_THEME_DEFAULT_FONT_NORMAL         &lv_font_unscii_8
-#elif defined CONFIG_LV_FONT_DEFAULT_NORMAL_MONTSERRAT12SUBPX
-#define LV_THEME_DEFAULT_FONT_NORMAL         &lv_font_montserrat_12_subpx
-#elif defined CONFIG_LV_FONT_DEFAULT_NORMAL_MONTSERRAT28COMPRESSED
-#define LV_THEME_DEFAULT_FONT_NORMAL         &lv_font_montserrat_28_compressed
-#elif defined CONFIG_LV_FONT_DEFAULT_NORMAL_DEJAVU_16_PERSIAN_HEBREW
-#define LV_THEME_DEFAULT_FONT_NORMAL         &lv_font_dejavu_16_persian_hebrew
-#elif defined CONFIG_LV_FONT_DEFAULT_NORMAL_SIMSUN_16_CJK
-#define LV_THEME_DEFAULT_FONT_NORMAL         &lv_font_simsun_16_cjk
-#endif
-
-#  else
-#    define  LV_THEME_DEFAULT_FONT_NORMAL        &lv_font_montserrat_14
-#  endif
+#    define LV_THEME_DEFAULT_FONT_NORMAL        &lv_font_montserrat_14
 #endif
 
 #ifndef LV_THEME_DEFAULT_FONT_SUBTITLE
-#  ifdef CONFIG_LV_THEME_DEFAULT_FONT_SUBTITLE
-
-#if defined CONFIG_LV_FONT_DEFAULT_SUBTITLE_MONTSERRAT_12
-#define LV_THEME_DEFAULT_FONT_SUBTITLE         &lv_font_montserrat_12
-#elif defined CONFIG_LV_FONT_DEFAULT_SUBTITLE_MONTSERRAT_14
-#define LV_THEME_DEFAULT_FONT_SUBTITLE         &lv_font_montserrat_14
-#elif defined CONFIG_LV_FONT_DEFAULT_SUBTITLE_MONTSERRAT_16
-#define LV_THEME_DEFAULT_FONT_SUBTITLE         &lv_font_montserrat_16
-#elif defined CONFIG_LV_FONT_DEFAULT_SUBTITLE_MONTSERRAT_18
-#define LV_THEME_DEFAULT_FONT_SUBTITLE         &lv_font_montserrat_18
-#elif defined CONFIG_LV_FONT_DEFAULT_SUBTITLE_MONTSERRAT_20
-#define LV_THEME_DEFAULT_FONT_SUBTITLE         &lv_font_montserrat_20
-#elif defined CONFIG_LV_FONT_DEFAULT_SUBTITLE_MONTSERRAT_22
-#define LV_THEME_DEFAULT_FONT_SUBTITLE         &lv_font_montserrat_22
-#elif defined CONFIG_LV_FONT_DEFAULT_SUBTITLE_MONTSERRAT_24
-#define LV_THEME_DEFAULT_FONT_SUBTITLE         &lv_font_montserrat_24
-#elif defined CONFIG_LV_FONT_DEFAULT_SUBTITLE_MONTSERRAT_26
-#define LV_THEME_DEFAULT_FONT_SUBTITLE         &lv_font_montserrat_26
-#elif defined CONFIG_LV_FONT_DEFAULT_SUBTITLE_MONTSERRAT_28
-#define LV_THEME_DEFAULT_FONT_SUBTITLE         &lv_font_montserrat_28
-#elif defined CONFIG_LV_FONT_DEFAULT_SUBTITLE_MONTSERRAT_30
-#define LV_THEME_DEFAULT_FONT_SUBTITLE         &lv_font_montserrat_30
-#elif defined CONFIG_LV_FONT_DEFAULT_SUBTITLE_MONTSERRAT_32
-#define LV_THEME_DEFAULT_FONT_SUBTITLE         &lv_font_montserrat_32
-#elif defined CONFIG_LV_FONT_DEFAULT_SUBTITLE_MONTSERRAT_34
-#define LV_THEME_DEFAULT_FONT_SUBTITLE         &lv_font_montserrat_34
-#elif defined CONFIG_LV_FONT_DEFAULT_SUBTITLE_MONTSERRAT_36
-#define LV_THEME_DEFAULT_FONT_SUBTITLE         &lv_font_montserrat_36
-#elif defined CONFIG_LV_FONT_DEFAULT_SUBTITLE_MONTSERRAT_38
-#define LV_THEME_DEFAULT_FONT_SUBTITLE         &lv_font_montserrat_38
-#elif defined CONFIG_LV_FONT_DEFAULT_SUBTITLE_MONTSERRAT_40
-#define LV_THEME_DEFAULT_FONT_SUBTITLE         &lv_font_montserrat_40
-#elif defined CONFIG_LV_FONT_DEFAULT_SUBTITLE_MONTSERRAT_42
-#define LV_THEME_DEFAULT_FONT_SUBTITLE         &lv_font_montserrat_42
-#elif defined CONFIG_LV_FONT_DEFAULT_SUBTITLE_MONTSERRAT_44
-#define LV_THEME_DEFAULT_FONT_SUBTITLE         &lv_font_montserrat_44
-#elif defined CONFIG_LV_FONT_DEFAULT_SUBTITLE_MONTSERRAT_46
-#define LV_THEME_DEFAULT_FONT_SUBTITLE         &lv_font_montserrat_46
-#elif defined CONFIG_LV_FONT_DEFAULT_SUBTITLE_MONTSERRAT_48
-#define LV_THEME_DEFAULT_FONT_SUBTITLE         &lv_font_montserrat_48
-#elif defined CONFIG_LV_FONT_DEFAULT_SUBTITLE_UNSCII_8
-#define LV_THEME_DEFAULT_FONT_SUBTITLE         &lv_font_unscii_8
-#elif defined CONFIG_LV_FONT_DEFAULT_SUBTITLE_MONTSERRAT12SUBPX
-#define LV_THEME_DEFAULT_FONT_SUBTITLE         &lv_font_montserrat_12_subpx
-#elif defined CONFIG_LV_FONT_DEFAULT_SUBTITLE_MONTSERRAT28COMPRESSED
-#define LV_THEME_DEFAULT_FONT_SUBTITLE         &lv_font_montserrat_28_compressed
-#elif defined CONFIG_LV_FONT_DEFAULT_SUBTITLE_DEJAVU_16_PERSIAN_HEBREW
-#define LV_THEME_DEFAULT_FONT_SUBTITLE         &lv_font_dejavu_16_persian_hebrew
-#elif defined CONFIG_LV_FONT_DEFAULT_SUBTITLE_SIMSUN_16_CJK
-#define LV_THEME_DEFAULT_FONT_SUBTITLE         &lv_font_simsun_16_cjk
-#else /* You can set your custom fonts here */
-
-#endif
-
-#  else
-#    define  LV_THEME_DEFAULT_FONT_SUBTITLE      &lv_font_montserrat_14
-#  endif
+#    define LV_THEME_DEFAULT_FONT_SUBTITLE      &lv_font_montserrat_14
 #endif
 
 #ifndef LV_THEME_DEFAULT_FONT_TITLE
-#  ifdef CONFIG_LV_THEME_DEFAULT_FONT_TITLE
-
-#if defined CONFIG_LV_FONT_DEFAULT_TITLE_MONTSERRAT_12
-#define LV_THEME_DEFAULT_FONT_TITLE         &lv_font_montserrat_12
-#elif defined CONFIG_LV_FONT_DEFAULT_TITLE_MONTSERRAT_14
-#define LV_THEME_DEFAULT_FONT_TITLE         &lv_font_montserrat_14
-#elif defined CONFIG_LV_FONT_DEFAULT_TITLE_MONTSERRAT_16
-#define LV_THEME_DEFAULT_FONT_TITLE         &lv_font_montserrat_16
-#elif defined CONFIG_LV_FONT_DEFAULT_TITLE_MONTSERRAT_18
-#define LV_THEME_DEFAULT_FONT_TITLE         &lv_font_montserrat_18
-#elif defined CONFIG_LV_FONT_DEFAULT_TITLE_MONTSERRAT_20
-#define LV_THEME_DEFAULT_FONT_TITLE         &lv_font_montserrat_20
-#elif defined CONFIG_LV_FONT_DEFAULT_TITLE_MONTSERRAT_22
-#define LV_THEME_DEFAULT_FONT_TITLE         &lv_font_montserrat_22
-#elif defined CONFIG_LV_FONT_DEFAULT_TITLE_MONTSERRAT_24
-#define LV_THEME_DEFAULT_FONT_TITLE         &lv_font_montserrat_24
-#elif defined CONFIG_LV_FONT_DEFAULT_TITLE_MONTSERRAT_26
-#define LV_THEME_DEFAULT_FONT_TITLE         &lv_font_montserrat_26
-#elif defined CONFIG_LV_FONT_DEFAULT_TITLE_MONTSERRAT_28
-#define LV_THEME_DEFAULT_FONT_TITLE         &lv_font_montserrat_28
-#elif defined CONFIG_LV_FONT_DEFAULT_TITLE_MONTSERRAT_30
-#define LV_THEME_DEFAULT_FONT_TITLE         &lv_font_montserrat_30
-#elif defined CONFIG_LV_FONT_DEFAULT_TITLE_MONTSERRAT_32
-#define LV_THEME_DEFAULT_FONT_TITLE         &lv_font_montserrat_32
-#elif defined CONFIG_LV_FONT_DEFAULT_TITLE_MONTSERRAT_34
-#define LV_THEME_DEFAULT_FONT_TITLE         &lv_font_montserrat_34
-#elif defined CONFIG_LV_FONT_DEFAULT_TITLE_MONTSERRAT_36
-#define LV_THEME_DEFAULT_FONT_TITLE         &lv_font_montserrat_36
-#elif defined CONFIG_LV_FONT_DEFAULT_TITLE_MONTSERRAT_38
-#define LV_THEME_DEFAULT_FONT_TITLE         &lv_font_montserrat_38
-#elif defined CONFIG_LV_FONT_DEFAULT_TITLE_MONTSERRAT_40
-#define LV_THEME_DEFAULT_FONT_TITLE         &lv_font_montserrat_40
-#elif defined CONFIG_LV_FONT_DEFAULT_TITLE_MONTSERRAT_42
-#define LV_THEME_DEFAULT_FONT_TITLE         &lv_font_montserrat_42
-#elif defined CONFIG_LV_FONT_DEFAULT_TITLE_MONTSERRAT_44
-#define LV_THEME_DEFAULT_FONT_TITLE         &lv_font_montserrat_44
-#elif defined CONFIG_LV_FONT_DEFAULT_TITLE_MONTSERRAT_46
-#define LV_THEME_DEFAULT_FONT_TITLE         &lv_font_montserrat_46
-#elif defined CONFIG_LV_FONT_DEFAULT_TITLE_MONTSERRAT_48
-#define LV_THEME_DEFAULT_FONT_TITLE         &lv_font_montserrat_48
-#elif defined CONFIG_LV_FONT_DEFAULT_TITLE_UNSCII_8
-#define LV_THEME_DEFAULT_FONT_TITLE         &lv_font_unscii_8
-#elif defined CONFIG_LV_FONT_DEFAULT_TITLE_MONTSERRAT12SUBPX
-#define LV_THEME_DEFAULT_FONT_TITLE         &lv_font_montserrat_12_subpx
-#elif defined CONFIG_LV_FONT_DEFAULT_TITLE_MONTSERRAT28COMPRESSED
-#define LV_THEME_DEFAULT_FONT_TITLE         &lv_font_montserrat_28_compressed
-#elif defined CONFIG_LV_FONT_DEFAULT_TITLE_DEJAVU_16_PERSIAN_HEBREW
-#define LV_THEME_DEFAULT_FONT_TITLE         &lv_font_dejavu_16_persian_hebrew
-#elif defined CONFIG_LV_FONT_DEFAULT_TITLE_SIMSUN_16_CJK
-#define LV_THEME_DEFAULT_FONT_TITLE         &lv_font_simsun_16_cjk
-#else /* You can set your custom fonts here */
-
-#endif
-
-#  else
-#    define  LV_THEME_DEFAULT_FONT_TITLE         &lv_font_montserrat_14
-#  endif
+#    define LV_THEME_DEFAULT_FONT_TITLE         &lv_font_montserrat_14
 #endif
 
 /*=================
