@@ -73,19 +73,6 @@ menu "LVGL configuration"
         default 32 if LV_COLOR_DEPTH_32
 
     menu "Font usage"
-        config LV_THEME_DEFAULT_FONT_SMALL
-            bool
-            default y
-        config LV_THEME_DEFAULT_FONT_NORMAL
-            bool
-            default y
-        config LV_THEME_DEFAULT_FONT_SUBTITLE
-            bool
-            default y
-        config LV_THEME_DEFAULT_FONT_TITLE
-            bool
-            default y
-
         config LV_FONT_FMT_TXT_LARGE
             bool "Enable it if you have fonts with a lot of characters."
             help
@@ -498,10 +485,6 @@ menu "LVGL configuration"
     endmenu
 
     menu "Theme usage"
-        config LV_THEME_DEFAULT_INIT
-            bool
-            default y
-
 	menu "Enable theme usage, always enable at least one theme"
             config LV_THEME_EMPTY
                     bool
