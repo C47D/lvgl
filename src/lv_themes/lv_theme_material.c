@@ -204,7 +204,8 @@ static void basic_init(void)
     lv_style_set_bg_color(&styles->scr, LV_STATE_DEFAULT, COLOR_SCR);
     lv_style_set_text_color(&styles->scr, LV_STATE_DEFAULT, COLOR_SCR_TEXT);
     lv_style_set_value_color(&styles->scr, LV_STATE_DEFAULT, COLOR_SCR_TEXT);
-    lv_style_set_text_font(&styles->scr, LV_STATE_DEFAULT, theme.font_normal);
+    lv_style_set_text_sel_color(&styles->scr, LV_STATE_DEFAULT, COLOR_SCR_TEXT);
+    lv_style_set_text_sel_bg_color(&styles->scr, LV_STATE_DEFAULT, theme.color_primary);
     lv_style_set_value_font(&styles->scr, LV_STATE_DEFAULT, theme.font_normal);
 
     style_init_reset(&styles->bg);
@@ -217,7 +218,6 @@ static void basic_init(void)
     lv_style_set_border_color(&styles->bg, LV_STATE_EDITED, theme.color_secondary);
     lv_style_set_border_width(&styles->bg, LV_STATE_DEFAULT, BORDER_WIDTH);
     lv_style_set_border_post(&styles->bg, LV_STATE_DEFAULT, true);
-    lv_style_set_text_font(&styles->bg, LV_STATE_DEFAULT, theme.font_normal);
     lv_style_set_text_color(&styles->bg, LV_STATE_DEFAULT, COLOR_BG_TEXT);
     lv_style_set_value_font(&styles->bg, LV_STATE_DEFAULT, theme.font_normal);
     lv_style_set_value_color(&styles->bg, LV_STATE_DEFAULT, COLOR_BG_TEXT);
@@ -849,7 +849,6 @@ static void tabview_win_shared_init(void)
     lv_style_set_border_width(&styles->tabview_btns_bg, LV_STATE_DEFAULT, LV_DPX(5));
     lv_style_set_border_side(&styles->tabview_btns_bg, LV_STATE_DEFAULT, LV_BORDER_SIDE_BOTTOM);
     lv_style_set_text_color(&styles->tabview_btns_bg, LV_STATE_DEFAULT, COLOR_SCR_TEXT);
-    lv_style_set_text_font(&styles->tabview_btns_bg, LV_STATE_DEFAULT, theme.font_normal);
     lv_style_set_image_recolor(&styles->tabview_btns_bg, LV_STATE_DEFAULT, lv_color_hex(0x979a9f));
     lv_style_set_pad_top(&styles->tabview_btns_bg, LV_STATE_DEFAULT, LV_DPX(7));
     lv_style_set_pad_left(&styles->tabview_btns_bg, LV_STATE_DEFAULT, LV_DPX(7));
@@ -1257,26 +1256,28 @@ static void theme_apply(lv_theme_t * th, lv_obj_t * obj, lv_theme_style_t name)
             _lv_style_list_add_style(list, &styles->pad_small);
             _lv_style_list_add_style(list, &styles->chart_series_bg);
 
+            list = lv_obj_get_style_list(obj, LV_CHART_PART_CURSOR);
+            _lv_style_list_add_style(list, &styles->chart_series_bg);
+
             list = lv_obj_get_style_list(obj, LV_CHART_PART_SERIES);
             _lv_style_list_add_style(list, &styles->chart_series);
             break;
 #endif
 #if LV_USE_TABLE
-        case LV_THEME_TABLE:
-        {
-            list = lv_obj_get_style_list(obj, LV_TABLE_PART_BG);
-            _lv_style_list_add_style(list, &styles->bg);
+        case LV_THEME_TABLE: {
+                list = lv_obj_get_style_list(obj, LV_TABLE_PART_BG);
+                _lv_style_list_add_style(list, &styles->bg);
 
-            int idx = 1; /* start value should be 1, not zero, since cell styles 
+                int idx = 1; /* start value should be 1, not zero, since cell styles
                             start at 1 due to presence of LV_TABLE_PART_BG=0
-                            in the enum (lv_table.h) */ 
-                         /* declaring idx outside loop to work with older compilers */
-	    for (;idx <= LV_TABLE_CELL_STYLE_CNT; idx ++ ) {
-              list = lv_obj_get_style_list(obj, idx);
-             _lv_style_list_add_style(list, &styles->table_cell);
+                            in the enum (lv_table.h) */
+                /* declaring idx outside loop to work with older compilers */
+                for(; idx <= LV_TABLE_CELL_STYLE_CNT; idx ++) {
+                    list = lv_obj_get_style_list(obj, idx);
+                    _lv_style_list_add_style(list, &styles->table_cell);
+                }
+                break;
             }
-            break;
-        }
 #endif
 
 #if LV_USE_WIN
