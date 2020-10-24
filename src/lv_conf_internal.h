@@ -1158,7 +1158,7 @@ e.g. "stm32f769xx.h" or "stm32f429xx.h" */
 #endif
 
 #ifndef LV_THEME_DEFAULT_INIT
-#  ifdef CONFIG_LV_THEME_DEFAULT_INIT_AVAILABLE
+#  ifdef CONFIG_LV_THEME_DEFAULT_INIT
 #    define LV_THEME_DEFAULT_INIT               CONFIG_LV_THEME_DEFAULT_INIT
 #  else
 #    define LV_THEME_DEFAULT_INIT               lv_theme_material_init
@@ -1190,19 +1190,35 @@ e.g. "stm32f769xx.h" or "stm32f429xx.h" */
 #endif
 
 #ifndef LV_THEME_DEFAULT_FONT_SMALL
+#  ifdef CONFIG_LV_THEME_DEFAULT_FONT_SMALL
+#    define LV_THEME_DEFAULT_FONT_SMALL         CONFIG_LV_THEME_DEFAULT_FONT_SMALL
+#  else
 #    define LV_THEME_DEFAULT_FONT_SMALL         &lv_font_montserrat_14
+#  endif
 #endif
 
 #ifndef LV_THEME_DEFAULT_FONT_NORMAL
+#  ifdef CONFIG_LV_THEME_DEFAULT_FONT_NORMAL
+#    define LV_THEME_DEFAULT_FONT_NORMAL        CONFIG_LV_THEME_DEFAULT_FONT_NORMAL
+#  else
 #    define LV_THEME_DEFAULT_FONT_NORMAL        &lv_font_montserrat_14
+#  endif
 #endif
 
 #ifndef LV_THEME_DEFAULT_FONT_SUBTITLE
+#  ifdef CONFIG_LV_THEME_DEFAULT_FONT_SUBTITLE
+#    define LV_THEME_DEFAULT_FONT_SUBTITLE      CONFIG_LV_THEME_DEFAULT_FONT_SUBTITLE
+#  else
 #    define LV_THEME_DEFAULT_FONT_SUBTITLE      &lv_font_montserrat_14
+#  endif
 #endif
 
 #ifndef LV_THEME_DEFAULT_FONT_TITLE
+#  ifdef CONFIG_LV_THEME_DEFAULT_FONT_TITLE
+#    define LV_THEME_DEFAULT_FONT_TITLE         CONFIG_LV_THEME_DEFAULT_FONT_TITLE
+#  else
 #    define LV_THEME_DEFAULT_FONT_TITLE         &lv_font_montserrat_14
+#  endif
 #endif
 
 /*=================
