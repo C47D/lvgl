@@ -957,6 +957,9 @@ menu "LVGL configuration"
         
         choice
             prompt "Set the default BIDI direction"
+            default LV_BIDI_DIR_AUTO
+            depends on LV_USE_BIDI
+
             config LV_BIDI_DIR_LTR
                 bool "Left-to-Right"
             config LV_BIDI_DIR_RTL
@@ -995,12 +998,6 @@ menu "LVGL configuration"
                 bool "The extra area can be adjusted in all 4 directions (-32k..+32k px)."
         endchoice
 
-        config LV_USE_EXT_CLICK_AREA
-            int
-            default 0 if LV_USE_EXT_CLICK_AREA_OFF
-            default 1 if LV_USE_EXT_CLICK_AREA_TINY
-            default 2 if LV_USE_EXT_CLICK_AREA_FULL
-        
         config LV_USE_ARC
             bool "Arc."
             default y
