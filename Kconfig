@@ -217,6 +217,86 @@ menu "LVGL configuration"
                 LV_IMG_CACHE_DEF_SIZE must be >= 1
     endmenu
 
+    menu "Compiler settings"
+        config LV_BIG_ENDIAN_SYSTEM
+            bool "For big endian systems set to 1"
+    endmenu
+
+    menu "Log Settings"
+        config LV_USE_LOG
+            bool "Enable the log module"
+            default n
+
+        choice
+            bool "Default log verbosity" if LV_USE_LOG
+            default LV_LOG_LEVEL_INFO
+            help
+                Specify how important log should be added.
+
+            config LV_LOG_LEVEL_TRACE
+                bool "Trace - Detailed information"
+            config LV_LOG_LEVEL_INFO 
+                bool "Info  - Log important events"
+            config LV_LOG_LEVEL_WARN 
+                bool "Warn  - Log if something unwanted happened"
+            config LV_LOG_LEVEL_ERROR
+                bool "Error - Only critical issues"
+            config LV_LOG_LEVEL_NONE 
+                bool "None  - Do not log anything"
+        endchoice
+
+        config LV_LOG_LEVEL
+            int
+            default 0 if LV_LOG_LEVEL_TRACE
+            default 1 if LV_LOG_LEVEL_INFO
+            default 2 if LV_LOG_LEVEL_WARN
+            default 3 if LV_LOG_LEVEL_ERROR
+            default 4 if LV_LOG_LEVEL_USER
+            default 5 if LV_LOG_LEVEL_NONE
+
+        config LV_LOG_PRINTF
+            bool "Print the log with 'printf'" if LV_USE_LOG
+            default y
+            help
+                Use printf for log output. 
+                If not set the user needs to register a callback with `lv_log_register_print_cb`.
+
+    endmenu
+    
+    menu "Debug Settings"
+        config LV_USE_DEBUG
+            bool "Enable Debug"
+            default y
+        
+        config LV_USE_ASSERT_NULL
+            bool "Check if the parameter is NULL. (Quite fast)"
+            default y
+
+        config LV_USE_ASSERT_MEM
+            bool "Checks is the memory is successfully allocated or no. (Quite fast)"
+            default y
+
+        config LV_USE_ASSERT_MEM_INTEGRITY
+            bool "Check the integrity of `lv_mem` after critical operations. (Slow)"
+            default n
+            
+        config LV_USE_ASSERT_STR
+            bool "Search for NULL, very long strings, invalid characters, and unnatural repetitions. (Slow)"
+            help 
+                If disabled `LV_USE_ASSERT_NULL` will be performed instead (if it's enabled).
+            default n
+            
+        config LV_USE_ASSERT_OBJ
+            bool "Check NULL, the object's type and existence (e.g. not deleted). (Quite slow)."
+            help 
+                If disabled `LV_USE_ASSERT_NULL` will be performed instead (if it's enabled)
+            default n
+            
+        config LV_USE_ASSERT_STYLE
+            bool "Check if the styles are properly initialized. (Fast)"
+            default n
+    endmenu
+    
     menu "Font usage"
         config LV_FONT_FMT_TXT_LARGE
             bool "Enable it if you have fonts with a lot of characters."
@@ -233,79 +313,59 @@ menu "LVGL configuration"
                 With "normal" font it doesn't matter.
         
         menu "Enable built-in fonts"
+            config LV_FONT_MONTSERRAT_8
+                bool "Enable Montserrat 8"
+            config LV_FONT_MONTSERRAT_10
+                bool "Enable Montserrat 10"
             config LV_FONT_MONTSERRAT_12
-                    bool
-                    prompt "Enable Montserrat 12"
+                bool "Enable Montserrat 12"
             config LV_FONT_MONTSERRAT_14
-                    bool
-                    prompt "Enable Montserrat 14"
+                bool "Enable Montserrat 14"
             config LV_FONT_MONTSERRAT_16
-                    bool
-                    prompt "Enable Montserrat 16"
-                    default y
+                bool "Enable Montserrat 16"
+                default y
             config LV_FONT_MONTSERRAT_18
-                    bool
-                    prompt "Enable Montserrat 18"
+                bool "Enable Montserrat 18"
             config LV_FONT_MONTSERRAT_20
-                    bool
-                    prompt "Enable Montserrat 20"
+                bool "Enable Montserrat 20"
             config LV_FONT_MONTSERRAT_22
-                    bool
-                    prompt "Enable Montserrat 22"
+                bool "Enable Montserrat 22"
             config LV_FONT_MONTSERRAT_24
-                    bool
-                    prompt "Enable Montserrat 24"
+                bool "Enable Montserrat 24"
             config LV_FONT_MONTSERRAT_26
-                    bool
-                    prompt "Enable Montserrat 26"
+                bool "Enable Montserrat 26"
             config LV_FONT_MONTSERRAT_28
-                    bool
-                    prompt "Enable Montserrat 28"
+                bool "Enable Montserrat 28"
             config LV_FONT_MONTSERRAT_30
-                    bool
-                    prompt "Enable Montserrat 30"
+                bool "Enable Montserrat 30"
             config LV_FONT_MONTSERRAT_32
-                    bool
-                    prompt "Enable Montserrat 32"
+                bool "Enable Montserrat 32"
             config LV_FONT_MONTSERRAT_34
-                    bool
-                    prompt "Enable Montserrat 34"
+                bool "Enable Montserrat 34"
             config LV_FONT_MONTSERRAT_36
-                    bool
-                    prompt "Enable Montserrat 36"
+                bool "Enable Montserrat 36"
             config LV_FONT_MONTSERRAT_38
-                    bool
-                    prompt "Enable Montserrat 38"
+                bool "Enable Montserrat 38"
             config LV_FONT_MONTSERRAT_40
-                    bool
-                    prompt "Enable Montserrat 40"
+                bool "Enable Montserrat 40"
             config LV_FONT_MONTSERRAT_42
-                    bool
-                    prompt "Enable Montserrat 42"
+                bool "Enable Montserrat 42"
             config LV_FONT_MONTSERRAT_44
-                    bool
-                    prompt "Enable Montserrat 44"
+                bool "Enable Montserrat 44"
             config LV_FONT_MONTSERRAT_46
-                    bool
-                    prompt "Enable Montserrat 46"
+                bool "Enable Montserrat 46"
             config LV_FONT_MONTSERRAT_48
-                    bool
-                    prompt "Enable Montserrat 48"
+                bool "Enable Montserrat 48"
             config LV_FONT_UNSCII_8
-                    bool
-                    prompt "Enable UNSCII 8 (Perfect monospace font)"
+                bool "Enable UNSCII 8 (Perfect monospace font)"
             config LV_FONT_MONTSERRAT12SUBPX
-                    bool
-                    prompt "Enable Montserrat 12 sub-pixel"
+                bool "Enable Montserrat 12 sub-pixel"
             config LV_FONT_MONTSERRAT28COMPRESSED
-                    bool
-                    prompt "Enable Montserrat 28 compressed"
+                bool "Enable Montserrat 28 compressed"
             config LV_FONT_DEJAVU_16_PERSIAN_HEBREW
-                    bool
-                    prompt "Enable Dejavu 16 Persian, Hebrew, Arabic letters"
+                bool "Enable Dejavu 16 Persian, Hebrew, Arabic letters"
             config LV_FONT_SIMSUN_16_CJK
-                    bool
-                    prompt "Enable Simsun 16 CJK"
+                bool "Enable Simsun 16 CJK"
         endmenu
 
         choice LV_FONT_DEFAULT_SMALL
@@ -314,6 +374,12 @@ menu "LVGL configuration"
             help
                 Select theme default small font
 
+            config LV_FONT_DEFAULT_SMALL_MONTSERRAT_8
+                bool "Montserrat 8"
+                select LV_FONT_MONTSERRAT_8
+            config LV_FONT_DEFAULT_SMALL_MONTSERRAT_10
+                bool "Montserrat 10"
+                select LV_FONT_MONTSERRAT_10
             config LV_FONT_DEFAULT_SMALL_MONTSERRAT_12
                 bool "Montserrat 12"
                 select LV_FONT_MONTSERRAT_12
@@ -394,6 +460,12 @@ menu "LVGL configuration"
             help
                 Select theme default normal font
 
+            config LV_FONT_DEFAULT_NORMAL_MONTSERRAT_8
+                bool "Montserrat 8"
+                select LV_FONT_MONTSERRAT_8
+            config LV_FONT_DEFAULT_NORMAL_MONTSERRAT_10
+                bool "Montserrat 10"
+                select LV_FONT_MONTSERRAT_10
             config LV_FONT_DEFAULT_NORMAL_MONTSERRAT_12
                 bool "Montserrat 12"
                 select LV_FONT_MONTSERRAT_12
@@ -474,6 +546,12 @@ menu "LVGL configuration"
             help
                 Select theme default subtitle font
 
+            config LV_FONT_DEFAULT_SUBTITLE_MONTSERRAT_8
+                bool "Montserrat 8"
+                select LV_FONT_MONTSERRAT_8
+            config LV_FONT_DEFAULT_SUBTITLE_MONTSERRAT_10
+                bool "Montserrat 10"
+                select LV_FONT_MONTSERRAT_10
             config LV_FONT_DEFAULT_SUBTITLE_MONTSERRAT_12
                 bool "Montserrat 12"
                 select LV_FONT_MONTSERRAT_12
@@ -554,6 +632,9 @@ menu "LVGL configuration"
             help
                 Select theme default title font
 
+            config LV_FONT_DEFAULT_TITLE_MONTSERRAT_8
+                bool "Montserrat 8"
+                select LV_FONT_MONTSERRAT_8
             config LV_FONT_DEFAULT_TITLE_MONTSERRAT_12
                 bool "Montserrat 12"
                 select LV_FONT_MONTSERRAT_12
@@ -632,18 +713,14 @@ menu "LVGL configuration"
     menu "Theme usage"
 	menu "Enable theme usage, always enable at least one theme"
             config LV_THEME_EMPTY
-                    bool
-                    prompt "Empty: No theme, you can apply your styles as you need."
+                bool "Empty: No theme, you can apply your styles as you need."
             config LV_THEME_TEMPLATE
-                    bool
-                    prompt "Template: Simple to create your theme based on it."
+                bool "Template: Simple to create your theme based on it."
             config LV_THEME_MATERIAL
-                    bool
-                    prompt "Material: A fast and impressive theme."
-                    default y
+                bool "Material: A fast and impressive theme."
+                default y
             config LV_THEME_MONO
-                    bool
-                    prompt "Mono: Mono-color theme for monochrome displays"
+                bool "Mono: Mono-color theme for monochrome displays"
 	endmenu
 
         choice LV_THEME_DEFAULT_INIT
@@ -720,6 +797,27 @@ menu "LVGL configuration"
             endif
         endchoice
         
+        config LV_THEME_DEFAULT_COLOR_PRIMARY
+            hex
+            default 0xFFFFFF if LV_THEME_DEFAULT_PRIMARY_COLOR_WHITE
+            default 0xC0C0C0 if LV_THEME_DEFAULT_PRIMARY_COLOR_SILVER
+            default 0x808080 if LV_THEME_DEFAULT_PRIMARY_COLOR_GRAY
+            default 0x000000 if LV_THEME_DEFAULT_PRIMARY_COLOR_BLACK
+            default 0xFF0000 if LV_THEME_DEFAULT_PRIMARY_COLOR_RED
+            default 0x800000 if LV_THEME_DEFAULT_PRIMARY_COLOR_MAROON
+            default 0xFFFF00 if LV_THEME_DEFAULT_PRIMARY_COLOR_YELLOW
+            default 0x808000 if LV_THEME_DEFAULT_PRIMARY_COLOR_OLIVE
+            default 0x00FF00 if LV_THEME_DEFAULT_PRIMARY_COLOR_LIME
+            default 0x008000 if LV_THEME_DEFAULT_PRIMARY_COLOR_GREEN
+            default 0x00FFFF if LV_THEME_DEFAULT_PRIMARY_COLOR_CYAN
+            default 0x00FFFF if LV_THEME_DEFAULT_PRIMARY_COLOR_AQUA
+            default 0x008080 if LV_THEME_DEFAULT_PRIMARY_COLOR_TEAL
+            default 0x0000FF if LV_THEME_DEFAULT_PRIMARY_COLOR_BLUE
+            default 0x000080 if LV_THEME_DEFAULT_PRIMARY_COLOR_NAVY
+            default 0xFF00FF if LV_THEME_DEFAULT_PRIMARY_COLOR_MAGENTA
+            default 0x800080 if LV_THEME_DEFAULT_PRIMARY_COLOR_PURPLE
+            default 0xFFA500 if LV_THEME_DEFAULT_PRIMARY_COLOR_ORANGE
+        
         choice
             prompt "Select theme default secondary color"
             default LV_THEME_DEFAULT_SECONDARY_COLOR_BLUE if !LV_THEME_DEFAULT_INIT_MONO
@@ -773,28 +871,7 @@ menu "LVGL configuration"
                 bool "Default secondary color orange"
             endif
         endchoice
-
-        config LV_THEME_DEFAULT_COLOR_PRIMARY
-            hex
-            default 0xFFFFFF if LV_THEME_DEFAULT_PRIMARY_COLOR_WHITE
-            default 0xC0C0C0 if LV_THEME_DEFAULT_PRIMARY_COLOR_SILVER
-            default 0x808080 if LV_THEME_DEFAULT_PRIMARY_COLOR_GRAY
-            default 0x000000 if LV_THEME_DEFAULT_PRIMARY_COLOR_BLACK
-            default 0xFF0000 if LV_THEME_DEFAULT_PRIMARY_COLOR_RED
-            default 0x800000 if LV_THEME_DEFAULT_PRIMARY_COLOR_MAROON
-            default 0xFFFF00 if LV_THEME_DEFAULT_PRIMARY_COLOR_YELLOW
-            default 0x808000 if LV_THEME_DEFAULT_PRIMARY_COLOR_OLIVE
-            default 0x00FF00 if LV_THEME_DEFAULT_PRIMARY_COLOR_LIME
-            default 0x008000 if LV_THEME_DEFAULT_PRIMARY_COLOR_GREEN
-            default 0x00FFFF if LV_THEME_DEFAULT_PRIMARY_COLOR_CYAN
-            default 0x00FFFF if LV_THEME_DEFAULT_PRIMARY_COLOR_AQUA
-            default 0x008080 if LV_THEME_DEFAULT_PRIMARY_COLOR_TEAL
-            default 0x0000FF if LV_THEME_DEFAULT_PRIMARY_COLOR_BLUE
-            default 0x000080 if LV_THEME_DEFAULT_PRIMARY_COLOR_NAVY
-            default 0xFF00FF if LV_THEME_DEFAULT_PRIMARY_COLOR_MAGENTA
-            default 0x800080 if LV_THEME_DEFAULT_PRIMARY_COLOR_PURPLE
-            default 0xFFA500 if LV_THEME_DEFAULT_PRIMARY_COLOR_ORANGE
-        
+ 
         config LV_THEME_DEFAULT_COLOR_SECONDARY
             hex
             default 0xFFFFFF if LV_THEME_DEFAULT_SECONDARY_COLOR_WHITE
@@ -832,83 +909,6 @@ menu "LVGL configuration"
                 depends on LV_THEME_MATERIAL
         endchoice
 
-    endmenu
-
-
-
-    menu "Log Settings"
-        config LV_USE_LOG
-            bool "Enable the log module"
-            default n
-
-        choice
-            bool "Default log verbosity" if LV_USE_LOG
-            default LV_LOG_LEVEL_INFO
-            help
-                Specify how important log should be added.
-
-            config LV_LOG_LEVEL_TRACE
-                bool "Trace - Detailed information"
-            config LV_LOG_LEVEL_INFO 
-                bool "Info  - Log important events"
-            config LV_LOG_LEVEL_WARN 
-                bool "Warn  - Log if something unwanted happened"
-            config LV_LOG_LEVEL_ERROR
-                bool "Error - Only critical issues"
-            config LV_LOG_LEVEL_NONE 
-                bool "None  - Do not log anything"
-        endchoice
-
-        config LV_LOG_LEVEL
-            int
-            default 0 if LV_LOG_LEVEL_TRACE
-            default 1 if LV_LOG_LEVEL_INFO
-            default 2 if LV_LOG_LEVEL_WARN
-            default 3 if LV_LOG_LEVEL_ERROR
-            default 4 if LV_LOG_LEVEL_USER
-            default 5 if LV_LOG_LEVEL_NONE
-
-        config LV_LOG_PRINTF
-            bool "Print the log with 'printf'" if LV_USE_LOG
-            default y
-            help
-                Use printf for log output. 
-                If not set the user needs to register a callback with `lv_log_register_print_cb`.
-
-    endmenu
-
-    menu "Debug Settings"
-        config LV_USE_DEBUG
-            bool "Enable Debug"
-            default y
-        
-        config LV_USE_ASSERT_NULL
-            bool "Check if the parameter is NULL. (Quite fast)"
-            default y
-
-        config LV_USE_ASSERT_MEM
-            bool "Checks is the memory is successfully allocated or no. (Quite fast)"
-            default y
-
-        config LV_USE_ASSERT_MEM_INTEGRITY
-            bool "Check the integrity of `lv_mem` after critical operations. (Slow)"
-            default n
-            
-        config LV_USE_ASSERT_STR
-            bool "Search for NULL, very long strings, invalid characters, and unnatural repetitions. (Slow)"
-            help 
-                If disabled `LV_USE_ASSERT_NULL` will be performed instead (if it's enabled).
-            default n
-            
-        config LV_USE_ASSERT_OBJ
-            bool "Check NULL, the object's type and existence (e.g. not deleted). (Quite slow)."
-            help 
-                If disabled `LV_USE_ASSERT_NULL` will be performed instead (if it's enabled)
-            default n
-            
-        config LV_USE_ASSERT_STYLE
-            bool "Check if the styles are properly initialized. (Fast)"
-            default 0
     endmenu
 
     menu "Text Settings"
@@ -953,16 +953,15 @@ menu "LVGL configuration"
             string "The control character to use for signalling text recoloring"
             default "#"
 
-        choice LV_USE_BIDI
-            prompt "Support bidirectional texts"
+        config LV_USE_BIDI
+            bool "Support bidirectional texts"
             help 
                 Allows mixing Left-to-Right and Right-to-Left texts.
                 The direction will be processed according to the Unicode Bidirectioanl Algorithm:
                 https://www.w3.org/International/articles/inline-bidi-markup/uba-basics
-            default LV_BIDI_NO_SUPPORT
-                                    
-            config LV_BIDI_NO_SUPPORT
-                bool "Bidirectional texts not supported"
+        
+        choice
+            prompt "Set the default BIDI direction"
             config LV_BIDI_DIR_LTR
                 bool "Left-to-Right"
             config LV_BIDI_DIR_RTL
