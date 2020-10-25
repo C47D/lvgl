@@ -277,6 +277,17 @@ extern "C" {
 #endif
 
 /*------------------
+ * TEXT ENCODING
+ *-----------------*/
+#ifndef LV_TEXT_ENC
+ #ifdef CONFIG_LV_TXT_ENC_UTF8
+  #define CONFIG_LV_TXT_ENC  LV_TXT_ENC_UTF8
+ #elif CONFIG_LV_TXT_ENC_ASCII
+  #define CONFIG_LV_TXT_ENC  LV_TXT_ENC_ASCII
+ #endif
+#endif
+
+/*------------------
  * BIDI DIRECTION
  *-----------------*/
 
@@ -287,6 +298,20 @@ extern "C" {
   #define CONFIG_LV_BIDI_BASE_DIR_DEF LV_BIDI_DIR_RTL
  #elif CONFIG_LV_BIDI_DIR_AUTO
   #define CONFIG_LV_BIDI_BASE_DIR_DEF LV_BIDI_DIR_AUTO
+ #endif
+#endif
+
+/*------------------
+ * EXT CLICK AREA
+ *-----------------*/
+
+#ifndef LV_USE_EXT_CLICK_AREA
+ #ifdef CONFIG_LV_USE_EXT_CLICK_AREA_OFF
+  #define CONFIG_LV_USE_EXT_CLICK_AREA  LV_EXT_CLICK_AREA_OFF
+ #elif CONFIG_LV_USE_EXT_CLICK_AREA_TINY
+  #define CONFIG_LV_USE_EXT_CLICK_AREA  LV_EXT_CLICK_AREA_TINY
+ #elif CONFIG_LV_USE_EXT_CLICK_AREA_FULL
+  #define CONFIG_LV_USE_EXT_CLICK_AREA  LV_EXT_CLICK_AREA_FULL
  #endif
 #endif
 
