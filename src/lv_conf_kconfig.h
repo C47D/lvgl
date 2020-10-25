@@ -276,6 +276,20 @@ extern "C" {
  #endif
 #endif
 
+/*------------------
+ * BIDI DIRECTION
+ *-----------------*/
+
+#ifndef LV_BIDI_BASE_DIR_DEF
+ #ifdef CONFIG_LV_BIDI_DIR_LTR
+  #define CONFIG_LV_BIDI_BASE_DIR_DEF LV_BIDI_DIR_LTR
+ #elif CONFIG_LV_BIDI_DIR_RTL
+  #define CONFIG_LV_BIDI_BASE_DIR_DEF LV_BIDI_DIR_RTL
+ #elif CONFIG_LV_BIDI_DIR_AUTO
+  #define CONFIG_LV_BIDI_BASE_DIR_DEF LV_BIDI_DIR_AUTO
+ #endif
+#endif
+
 #ifdef __cplusplus
 } /* extern "C" */
 #endif
