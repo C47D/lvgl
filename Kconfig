@@ -225,7 +225,6 @@ menu "LVGL configuration"
     menu "Log Settings"
         config LV_USE_LOG
             bool "Enable the log module"
-            default n
 
         choice
             bool "Default log verbosity" if LV_USE_LOG
@@ -278,23 +277,19 @@ menu "LVGL configuration"
 
         config LV_USE_ASSERT_MEM_INTEGRITY
             bool "Check the integrity of `lv_mem` after critical operations. (Slow)"
-            default n
             
         config LV_USE_ASSERT_STR
             bool "Search for NULL, very long strings, invalid characters, and unnatural repetitions. (Slow)"
             help 
                 If disabled `LV_USE_ASSERT_NULL` will be performed instead (if it's enabled).
-            default n
             
         config LV_USE_ASSERT_OBJ
             bool "Check NULL, the object's type and existence (e.g. not deleted). (Quite slow)."
             help 
                 If disabled `LV_USE_ASSERT_NULL` will be performed instead (if it's enabled)
-            default n
             
         config LV_USE_ASSERT_STYLE
             bool "Check if the styles are properly initialized. (Fast)"
-            default n
     endmenu
     
     menu "Font usage"
@@ -972,18 +967,15 @@ menu "LVGL configuration"
 
         config LV_USE_ARABIC_PERSIAN_CHARS
             bool "Enable Arabic/Persian processing"
-            default n
             help 
                 In these languages characters should be replaced with
                 an other form based on their position in the text.
 
         config LV_SPRINTF_CUSTOM
         bool "Change the built-in (v)snprintf functions"
-        default n
 
         config LV_SPRINTF_DISABLE_FLOAT
             bool "Disable float in built-in (v)snprintf functions" if !LV_SPRINTF_CUSTOM 
-            default n
     endmenu
 
     menu "Widgets"
@@ -1072,7 +1064,6 @@ menu "LVGL configuration"
        config LV_IMGBTN_TILED
            bool "Use imgbtn tiled."
            depends on LV_USE_IMGBTN
-           default n
        config LV_USE_KEYBOARD
            bool "Keyboard. Dependencies: lv_btnm."
            select LV_USE_BTNM
