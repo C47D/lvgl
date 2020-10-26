@@ -13,8 +13,9 @@
 #if defined ESP_PLATFORM
 #include "sdkconfig.h"
 #include "esp_attr.h"
-#include "lv_conf_kconfig.h"
 #endif
+
+#include "lv_conf_kconfig.h"
 
 #if defined __has_include
 #  if __has_include("lv_conf.h") && !defined (LV_CONF_SKIP)
@@ -101,7 +102,7 @@
 /*Images pixels with this color will not be drawn (with chroma keying)*/
 #ifndef LV_COLOR_TRANSP
 #  ifdef CONFIG_LV_COLOR_TRANSP
-#    define LV_COLOR_TRANSP CONFIG_LV_COLOR_TRANSP
+#    define LV_COLOR_TRANSP lv_color_hex(CONFIG_LV_COLOR_TRANSP)
 #  else
 #    define  LV_COLOR_TRANSP    LV_COLOR_LIME         /*LV_COLOR_LIME: pure green*/
 #  endif
