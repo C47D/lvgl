@@ -188,6 +188,7 @@ void lv_chart_set_zoom_x(lv_obj_t * obj, uint16_t zoom_x)
 
     lv_chart_t * chart  = (lv_chart_t *)obj;
     if(chart->zoom_x == zoom_x) return;
+    if(LV_CHART_ZOOM_NONE > zoom_x) zoom_x = LV_CHART_ZOOM_NONE;
 
     chart->zoom_x = zoom_x;
     lv_obj_refresh_self_size(obj);
@@ -202,6 +203,7 @@ void lv_chart_set_zoom_y(lv_obj_t * obj, uint16_t zoom_y)
 
     lv_chart_t * chart  = (lv_chart_t *)obj;
     if(chart->zoom_y == zoom_y) return;
+    if(LV_CHART_ZOOM_NONE > zoom_y) zoom_y = LV_CHART_ZOOM_NONE;
 
     chart->zoom_y = zoom_y;
     lv_obj_refresh_self_size(obj);
