@@ -89,7 +89,6 @@ void test_chart_set_new_point_count_as_zero(void)
 
 void test_chart_point_is_added_at_the_end_of_a_serie(void)
 {
-#if 0
     lv_chart_series_t * red_series;
     red_series = lv_chart_add_series(chart, red_color, LV_CHART_AXIS_SECONDARY_Y);
 
@@ -97,7 +96,29 @@ void test_chart_point_is_added_at_the_end_of_a_serie(void)
     TEST_ASSERT_NULL_MESSAGE(red_series->x_points, "X points in non scatter chart should not point to anything");
 
     lv_chart_remove_series(chart, red_series);
-#endif
+}
+
+void test_chart_one_point_when_setting_point_count_to_zero(void)
+{
+    lv_chart_set_point_count(chart, 0u);
+    TEST_ASSERT_EQUAL(1u, lv_chart_get_point_count(chart));
+}
+
+void test_chart_set_range(void)
+{
+    // lv_chart_set_range()
+}
+
+void test_chart_set_zoom_y_to_none_when_factor_is_less_than_256(void)
+{
+    lv_chart_set_zoom_y(chart, 128);
+    TEST_ASSERT_EQUAL(LV_CHART_ZOOM_NONE, lv_chart_get_zoom_y(chart));
+}
+
+void test_chart_set_zoom_x_to_none_when_factor_is_less_than_256(void)
+{
+    lv_chart_set_zoom_x(chart, 128);
+    TEST_ASSERT_EQUAL(LV_CHART_ZOOM_NONE, lv_chart_get_zoom_x(chart));
 }
 
 #endif
