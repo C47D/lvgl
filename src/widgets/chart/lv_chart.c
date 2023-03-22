@@ -1409,7 +1409,7 @@ static void draw_y_ticks(lv_obj_t * obj, lv_draw_ctx_t * draw_ctx, lv_chart_axis
 
     lv_chart_tick_dsc_t * t = get_tick_gsc(obj, axis);
 
-    if(t->major_cnt <= 1) return;
+    if(t->tick_count <= 1) return; // TODO: What to do with new tick API?
     if(!t->label_en && !t->major_len && !t->minor_len) return;
 
     uint8_t sec_axis = axis == LV_CHART_AXIS_PRIMARY_Y ? 0 : 1;
@@ -1460,7 +1460,7 @@ static void draw_y_ticks(lv_obj_t * obj, lv_draw_ctx_t * draw_ctx, lv_chart_axis
     part_draw_dsc.line_dsc = &line_dsc;
     part_draw_dsc.label_dsc = &label_dsc;
 
-    uint32_t total_tick_num = (t->major_cnt - 1) * (t->minor_cnt);
+    uint32_t total_tick_num = t->tick_count;
     for(i = 0; i <= total_tick_num; i++) {
         /*draw a line at moving y position*/
         p2.y = p1.y = y_ofs + (int32_t)((int32_t)(h - line_dsc.width) * i) / total_tick_num;
@@ -1474,7 +1474,8 @@ static void draw_y_ticks(lv_obj_t * obj, lv_draw_ctx_t * draw_ctx, lv_chart_axis
 
         /*second point of the tick*/
         bool major = false;
-        if(i % t->minor_cnt == 0) major = true;
+        // Is this a major or minor tick? Draw a major every nth tick
+        if(i % t->nth_major == 0) major = true;
 
         if(major) p2.x = p1.x - major_len; /*major tick*/
         else p2.x = p1.x - minor_len; /*minor tick*/
@@ -1539,7 +1540,8 @@ static void draw_x_ticks(lv_obj_t * obj, lv_draw_ctx_t * draw_ctx, lv_chart_axis
     lv_chart_t * chart  = (lv_chart_t *)obj;
 
     lv_chart_tick_dsc_t * t = get_tick_gsc(obj, axis);
-    if(t->major_cnt <= 1) return;
+
+    if(t->tick_count <= 1) return; // TODO: What to do with new tick API?
     if(!t->label_en && !t->major_len && !t->minor_len) return;
 
     uint32_t i;
@@ -1598,17 +1600,26 @@ static void draw_x_ticks(lv_obj_t * obj, lv_draw_ctx_t * draw_ctx, lv_chart_axis
     }
 
     p1.y = y_ofs;
-    uint32_t total_tick_num;
+
+    /* Tick count calculation */
+#if 0
+    uint32_t total_tick_num = 0;
     if(chart->type == LV_CHART_TYPE_LINE && (((t->major_cnt - 1) * t->minor_cnt) == chart->point_cnt)) {
         total_tick_num = chart->point_cnt - 1;
     }
     else {
         total_tick_num = (t->major_cnt - 1) * t->minor_cnt;
     }
-    if(!total_tick_num) return; /*Ensure total_tick_num is not equal to zero*/
+#else
+    uint32_t total_tick_num = t->tick_count;
+#endif
+
+    /*Ensure total_tick_num is not equal to zero*/
+    if(0 == total_tick_num) return;
+
     for(i = 0; i <= total_tick_num; i++) { /*one extra loop - it may not exist in the list, empty label*/
         bool major = false;
-        if(i % t->minor_cnt == 0) major = true;
+        if(i % t->nth_major == 0) major = true;
 
         /*draw a line at moving x position*/
         p2.x = p1.x = x_ofs + (int32_t)((int32_t)(w - line_dsc.width) * i) / total_tick_num;
@@ -1625,13 +1636,16 @@ static void draw_x_ticks(lv_obj_t * obj, lv_draw_ctx_t * draw_ctx, lv_chart_axis
             tick_value = lv_map(i, 0, total_tick_num, chart->xmin[sec_axis], chart->xmax[sec_axis]);
         }
         else {
-            tick_value = i / t->minor_cnt;
+            tick_value = i;
         }
         part_draw_dsc.value = tick_value;
 
         if(major && t->label_en) {
-            char buf[LV_CHART_LABEL_MAX_TEXT_LENGTH];
+            char buf[LV_CHART_LABEL_MAX_TEXT_LENGTH] = {0};
             lv_snprintf(buf, sizeof(buf), "%" LV_PRId32, tick_value);
+
+            LV_LOG_USER("Major tick value 2: %s", buf);
+
             part_draw_dsc.label_dsc = &label_dsc;
             part_draw_dsc.text = buf;
             part_draw_dsc.text_length = LV_CHART_LABEL_MAX_TEXT_LENGTH;
