@@ -243,6 +243,28 @@ void lv_chart_set_axis_tick(lv_obj_t * obj, lv_chart_axis_t axis, lv_coord_t maj
     lv_obj_invalidate(obj);
 }
 
+void lv_chart_set_axis_tick_count(lv_obj_t * obj, lv_chart_axis_t axis, lv_coord_t tick_count)
+{
+    LV_ASSERT_OBJ(obj, MY_CLASS);
+
+    lv_chart_tick_dsc_t * t = get_tick_gsc(obj, axis);
+    t->tick_count = tick_count;
+
+    lv_obj_refresh_ext_draw_size(obj);
+    lv_obj_invalidate(obj);
+}
+
+void lv_chart_set_axis_tick_nth_major(lv_obj_t * obj, lv_chart_axis_t axis, lv_coord_t nth_major)
+{
+    LV_ASSERT_OBJ(obj, MY_CLASS);
+
+    lv_chart_tick_dsc_t * t = get_tick_gsc(obj, axis);
+    t->nth_major = nth_major;
+
+    lv_obj_refresh_ext_draw_size(obj);
+    lv_obj_invalidate(obj);
+}
+
 lv_chart_type_t lv_chart_get_type(const lv_obj_t * obj)
 {
     LV_ASSERT_OBJ(obj, MY_CLASS);

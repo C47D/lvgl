@@ -96,6 +96,8 @@ typedef struct {
     uint32_t minor_cnt : 15;
     uint32_t major_cnt : 15;
     uint32_t label_en  : 1;
+    uint32_t tick_count : 15;
+    uint32_t nth_major : 15;
 } lv_chart_tick_dsc_t;
 
 
@@ -224,6 +226,9 @@ uint16_t lv_chart_get_zoom_y(const lv_obj_t * obj);
  */
 void lv_chart_set_axis_tick(lv_obj_t * obj, lv_chart_axis_t axis, lv_coord_t major_len, lv_coord_t minor_len,
                             lv_coord_t major_cnt, lv_coord_t minor_cnt, bool label_en, lv_coord_t draw_size);
+
+void lv_chart_set_axis_tick_count(lv_obj_t * obj, lv_chart_axis_t axis, lv_coord_t tick_count);
+void lv_chart_set_axis_tick_nth_major(lv_obj_t * obj, lv_chart_axis_t axis, lv_coord_t nth_major);
 
 /**
  * Get the type of a chart
